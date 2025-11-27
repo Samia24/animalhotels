@@ -1,0 +1,534 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: ANIMALS HOTEL
+meta:
+  id: wrk_1dd959fec4824a7ab06eb146a31dab01
+  created: 1764257621332
+  modified: 1764257634873
+  description: ""
+collection:
+  - name: ANIMALS HOTEL
+    meta:
+      id: fld_79931ff82cdd43d680ef435dd9b6f762
+      created: 1764253829835
+      modified: 1764256676200
+      sortKey: -1764253829835
+      description: ""
+    children:
+      - url: http://localhost:8080/users
+        name: USUARIOS | CRIAR
+        meta:
+          id: req_6cd44e4c80554b3ebd634f895697af0f
+          created: 1764253845841
+          modified: 1764254019409
+          isPrivate: false
+          description: ""
+          sortKey: -1764253845841
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nome": "Admin",
+              "senha": "123"
+            }
+        parameters:
+          - name: Content-Type
+            value: application/json
+            description: ""
+            disabled: false
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/users
+        name: USUARIOS | LISTAR
+        meta:
+          id: req_763bb2dd04654387a4971160cba26398
+          created: 1764253942702
+          modified: 1764254012958
+          isPrivate: false
+          description: ""
+          sortKey: -1764253942702
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/users/1
+        name: USUARIOS | BUSCAR POR ID
+        meta:
+          id: req_c09da0dea26345e787b68ca6ac48cfd6
+          created: 1764254051308
+          modified: 1764254095858
+          isPrivate: false
+          description: ""
+          sortKey: -1764254051308
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/users/name/Admin
+        name: USUARIOS | BUSCAR POR NOME
+        meta:
+          id: req_9aeabb3354b642e28e2f4af9a78f3ae1
+          created: 1764254104493
+          modified: 1764254133637
+          isPrivate: false
+          description: ""
+          sortKey: -1764254104493
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/users/3
+        name: USUARIOS | EDITAR
+        meta:
+          id: req_78585a74556c4c559ca2f34ccefe5ca3
+          created: 1764254161009
+          modified: 1764254306127
+          isPrivate: false
+          description: ""
+          sortKey: -1764254161009
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nome": "Admin Atualizado"
+            }
+        parameters:
+          - name: Content-Type
+            value: application/json
+            description: ""
+            disabled: false
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/users/3
+        name: USUARIOS | DELETAR
+        meta:
+          id: req_c17404366c4743748c4475ad621f6936
+          created: 1764254475466
+          modified: 1764254515251
+          isPrivate: false
+          description: ""
+          sortKey: -1764254475466
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/tutores
+        name: TUTORES | CRIAR
+        meta:
+          id: req_a88dad4976c74797a5f129eaef6de4cc
+          created: 1764254534349
+          modified: 1764254674626
+          isPrivate: false
+          description: ""
+          sortKey: -1764254534349
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nome": "João da Silva",
+              "sexo": "M",
+              "nascimento": "1990-01-01",
+              "telefone": "99999-9999",
+              "endereco": "Rua das Flores, 123",
+              "usuarioCadastroId": 1
+            }
+        parameters:
+          - name: Content-Type
+            value: application/json
+            description: ""
+            disabled: false
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/tutores
+        name: TUTORES | LISTAR
+        meta:
+          id: req_612ddae3209f48eb93efd118a6f6d699
+          created: 1764254678913
+          modified: 1764254714153
+          isPrivate: false
+          description: ""
+          sortKey: -1764254678913
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/tutores/name/João da Silva
+        name: TUTORES | BUSCAR POR NOME
+        meta:
+          id: req_66c2da47ea2f4d168d89cc295b2fb131
+          created: 1764254721592
+          modified: 1764255310168
+          isPrivate: false
+          description: ""
+          sortKey: -1764254721592
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/tutores/1
+        name: TUTORES | BUSCAR POR ID
+        meta:
+          id: req_881b769934564a0785cca0c98f8d2662
+          created: 1764255377900
+          modified: 1764255402652
+          isPrivate: false
+          description: ""
+          sortKey: -1764254700252.5
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/tutores/1
+        name: TUTORES | EDITAR
+        meta:
+          id: req_555455bb759641129914fd9964c5f705
+          created: 1764255424157
+          modified: 1764255556275
+          isPrivate: false
+          description: ""
+          sortKey: -1764255424157
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "telefone": "88888-8888",
+              "endereco": "Nova Rua, 456"
+            }
+        parameters:
+          - name: Content-Type
+            value: application/json
+            description: ""
+            disabled: false
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/tutores/2
+        name: TUTORES | DELETE
+        meta:
+          id: req_d80a953d0b8c4410bff5d8834c65c057
+          created: 1764255588447
+          modified: 1764255615471
+          isPrivate: false
+          description: ""
+          sortKey: -1764255588447
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/animais
+        name: ANIMAIS | CRIAR
+        meta:
+          id: req_5a58dbaa66b246278f5c8a43e859c0ef
+          created: 1764255623106
+          modified: 1764255892445
+          isPrivate: false
+          description: ""
+          sortKey: -1764255623106
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "especie": "Gato",
+              "nome": "Tampico",
+              "raca": "SRD",
+              "tutorId": 1,
+              "usuarioCadastroId": 1
+            }
+        parameters:
+          - name: Content-Type
+            value: application/json
+            description: ""
+            disabled: false
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/animais
+        name: ANIMAIS | LISTAR
+        meta:
+          id: req_d8800da74cac474b9b44808823e5187d
+          created: 1764255903464
+          modified: 1764255969496
+          isPrivate: false
+          description: ""
+          sortKey: -1764255903464
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/animais/1
+        name: ANIMAIS | BUSCAR POR ID
+        meta:
+          id: req_a561a4d84eda4a7992e6a3a80baa6821
+          created: 1764256050588
+          modified: 1764256054122
+          isPrivate: false
+          description: ""
+          sortKey: -1764255763285
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/animais/name/Rex
+        name: ANIMAIS | BUSCAR POR NOME
+        meta:
+          id: req_92b97bfdec094994884cfcc4eb184f39
+          created: 1764256073769
+          modified: 1764256084091
+          isPrivate: false
+          description: ""
+          sortKey: -1764255693195.5
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/animais/1
+        name: ANIMAIS | EDITAR
+        meta:
+          id: req_8b1ad73ead164bdf8f5a040efff09e75
+          created: 1764256097188
+          modified: 1764256153552
+          isPrivate: false
+          description: ""
+          sortKey: -1764256097188
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nome": "Rex Junior",
+              "raca": "Vira-lata"
+            }
+        parameters:
+          - name: Content-Type
+            value: application/json
+            description: ""
+            disabled: false
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/animais/4
+        name: ANIMAIS | DELETAR
+        meta:
+          id: req_e486c796cb2a42d7a82f3dab845bcc60
+          created: 1764256204761
+          modified: 1764256234045
+          isPrivate: false
+          description: ""
+          sortKey: -1764256204761
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_87c3790e7a204492a56b75bb3994cfef
+    created: 1764253662855
+    modified: 1764253662855
+environments:
+  name: Base Environment
+  meta:
+    id: env_7d5851faa12443cd8b0bcb7d1f892bbf
+    created: 1764253662842
+    modified: 1764253662842
+    isPrivate: false
