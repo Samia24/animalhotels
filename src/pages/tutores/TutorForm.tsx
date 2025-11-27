@@ -1,69 +1,65 @@
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
-import { api } from '../../services/api';
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { createTutor, getTutorById, updateTutor } from "../../services/api";
 
-interface TutorFormData {
-  nome: string;
+interface Tutor {
+  name: string;
   email: string;
-  telefone: string;
+  phone?: string;
 }
 
 export function TutorForm() {
-  const { register, handleSubmit, setValue } = useForm<TutorFormData>();
-  const navigate = useNavigate();
   const { id } = useParams();
-  const isEditing = !!id;
+  const navigate = useNavigate();
+
+  const [tutor, setTutor] = useState<Tutor>({ name: "", email: "", phone: "" });
 
   useEffect(() => {
-    if (isEditing) {
-      api.get(`/tutors/${id}`).then(res => {
-        setValue('nome', res.data.nome);
-        setValue('email', res.data.email);
-        setValue('telefone', res.data.telefone);
-      });
+    if (id) {
+      // Carregar tutor para edição
+      getTutorById(id).then(res => setTutor(res.data));
     }
   }, [id]);
 
-  const onSubmit = async (data: TutorFormData) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTutor({ ...tutor, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     try {
-      if (isEditing) {
-        await api.put(`/tutors/${id}`, data);
+      if (id) {
+        await updateTutor(id, tutor);
       } else {
-        await api.post('/tutors', data);
+        await createTutor(tutor);
       }
-      navigate('/tutors');
+      navigate("/tutors");
     } catch (error) {
-      alert("Erro ao salvar");
+      console.error("Erro ao salvar tutor", error);
     }
   };
 
   return (
-    <div className="container">
-      <div className="card form-card">
-        <h2>{isEditing ? 'Editar Tutor' : 'Novo Tutor'}</h2>
-
-        <form onSubmit={handleSubmit(onSubmit)} className="form-default">
-          <label>Nome</label>
-          <input {...register("nome")} required />
-
-          <label>Email</label>
-          <input {...register("email")} type="email" required />
-
-          <label>Telefone</label>
-          <input {...register("telefone")} required />
-
-          <button type="submit" className="btn-primary">Salvar</button>
-
-          <button 
-            type="button"
-            className="btn-cancel"
-            onClick={() => navigate('/tutors')}
-          >
-            Cancelar
-          </button>
-        </form>
-      </div>
+    <div className="page-center card">
+      <h1>{id ? "Editar Tutor" : "Novo Tutor"}</h1>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Nome:
+          <input name="name" value={tutor.name} onChange={handleChange} required />
+        </label>
+        <label>
+          Email:
+          <input name="email" type="email" value={tutor.email} onChange={handleChange} required />
+        </label>
+        <label>
+          Telefone:
+          <input name="phone" value={tutor.phone} onChange={handleChange} />
+        </label>
+        <button className="btn btn-green" type="submit">
+          {id ? "Atualizar" : "Cadastrar"}
+        </button>
+      </form>
     </div>
   );
 }
+

@@ -1,6 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import cachorro2 from '../../assets/cachorro2.png';
+import gato2 from '../../assets/gato2.png';
 
 export function Login() {
   const { register, handleSubmit } = useForm();
@@ -20,36 +22,37 @@ export function Login() {
   };
 
   return (
-    <div className="login-container">
-      <div className="card login-card">
-        <h2 className="login-title">AnimalHotels</h2>
+    <div className="login-page">
+      <div className="login-images">
+    <img src={cachorro2} alt="cachorro2" className="login-img" />
+    <img src={gato2} alt="gato2" className="login-img" />
+  </div>
+  <div className="form-card">
+    <h2 className="login-title">AnimalHotels</h2>
 
-        <form onSubmit={handleSubmit(handleLogin)}>
-          <div className="form-group">
-            <label>E-mail</label>
-            <input
-              {...register('email')}
-              type="email"
-              placeholder="admin@animalhotels.com"
-              required
-            />
-          </div>
+    <form onSubmit={handleSubmit(handleLogin)} className="form-default">
+      <label>E-mail</label>
+      <input
+        {...register('email')}
+        type="email"
+        placeholder="admin@animalhotels.com"
+        required
+      />
 
-          <div className="form-group">
-            <label>Senha</label>
-            <input
-              {...register('password')}
-              type="password"
-              placeholder="******"
-              required
-            />
-          </div>
+      <label>Senha</label>
+      <input
+        {...register('password')}
+        type="password"
+        placeholder="******"
+        required
+      />
 
-          <button type="submit" className="btn-primary">
-            ENTRAR
-          </button>
-        </form>
-      </div>
-    </div>
+      <button type="submit" className="btn btn-primary">
+        ENTRAR
+      </button>
+    </form>
+  </div>
+</div>
+
   );
 }

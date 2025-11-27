@@ -1,92 +1,73 @@
-import { useEffect, useState } from 'react';
-import { api } from '../../services/api';
-import type { ITutor } from '../../types';
+import { useEffect, useState } from "react";
+import { getTutores, deleteTutor } from "../../services/api";
+import { Link } from "react-router-dom";
+
+interface Tutor {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string;
+}
 
 export function Tutors() {
-  const [tutors, setTutors] = useState<ITutor[]>([]);
+  const [tutores, setTutores] = useState<Tutor[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Busca os dados assim que a tela carrega
-  useEffect(() => {
-    loadTutors();
-  }, []);
-
-  async function loadTutors() {
+  const fetchTutores = async () => {
     try {
-      const response = await api.get('/tutors'); 
-      setTutors(response.data);
+      const response = await getTutores();
+      setTutores(response.data);
     } catch (error) {
-      console.error("Erro ao buscar tutores:", error);
-      alert("Erro ao carregar lista. Verifique se o backend está rodando.");
+      console.error("Erro ao buscar tutores", error);
     } finally {
       setLoading(false);
     }
-  }
+  };
 
-  async function Deletar(id: string) {
-    if (confirm("Tem certeza que deseja excluir este tutor?")) {
+  const handleDelete = async (id: string) => {
+    if (window.confirm("Deseja realmente excluir este tutor?")) {
       try {
-        await api.delete(`/tutors/${id}`);
-        loadTutors(); // Recarrega a lista para sumir com o item excluído
+        await deleteTutor(id);
+        setTutores(tutores.filter(t => t.id !== id));
       } catch (error) {
-        alert("Erro ao excluir.");
+        console.error("Erro ao excluir tutor", error);
       }
     }
-  }
+  };
+
+  useEffect(() => {
+    fetchTutores();
+  }, []);
+
+  if (loading) return <p>Carregando tutores...</p>;
 
   return (
-    <div className="container">
-      <div className="flex-between">
-        <h1>Gerenciar Tutores</h1>
-        <button 
-          className="btn-success"
-          onClick={() => alert("Próximo passo: Tela de Cadastro!")}
-        >
-          + Novo Tutor
-        </button>
-      </div>
-
-      {loading ? (
-        <p>Carregando dados...</p>
-      ) : (
-        <div className="card">
-          <table>
-            <thead>
-              <tr>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Telefone</th>
-                <th style={{ width: '100px' }}>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tutors.length === 0 && (
-                <tr>
-                  <td colSpan={4} style={{ textAlign: 'center' }}>
-                    Nenhum tutor encontrado. Cadastre o primeiro!
-                  </td>
-                </tr>
-              )}
-
-              {tutors.map(tutor => (
-                <tr key={tutor.id}>
-                  <td>{tutor.name}</td>
-                  <td>{tutor.email}</td>
-                  <td>{tutor.phone}</td>
-                  <td>
-                    <button 
-                      className="btn-danger"
-                      onClick={() => Deletar(tutor.id)}
-                    >
-                      Excluir
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+    <div className="page-center">
+      <h1>Lista de Tutores</h1>
+      <Link to="/tutors/new" className="btn btn-green">Novo Tutor</Link>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {tutores.map(tutor => (
+            <tr key={tutor.id}>
+              <td>{tutor.name}</td>
+              <td>{tutor.email}</td>
+              <td>{tutor.phone || "-"}</td>
+              <td>
+                <Link to={`/tutors/edit/${tutor.id}`} className="btn btn-blue">Editar</Link>
+                <button className="btn btn-red" onClick={() => handleDelete(tutor.id)}>Excluir</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

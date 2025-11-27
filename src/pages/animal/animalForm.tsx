@@ -1,14 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { api } from '../../services/api';
-import type { ITutor, IAnimal } from '../../types';
 
 interface AnimalFormData {
-  nome: string;
-  especie: string;
-  raca: string;
-  idade: number;
+  name: string;
+  species: string;
+  breed: string;
+  age: number;
   tutorId: string;
 }
 
@@ -18,92 +17,64 @@ export function AnimalForm() {
   const { id } = useParams();
   const isEditing = !!id;
 
-  const [tutors, setTutors] = useState<ITutor[]>([]);
-
-  useEffect(() => {
-    api.get('/tutors')
-      .then(res => setTutors(res.data))
-      .catch(() => alert("Erro ao carregar lista de tutores."));
-  }, []);
-
   useEffect(() => {
     if (isEditing) {
-      api.get<IAnimal>(`/animals/${id}`)
-        .then(res => {
-          const animal = res.data;
-          setValue('nome', animal.name);
-          setValue('especie', animal.species);
-          setValue('raca', animal.breed);
-          setValue('idade', animal.age);
-          setValue('tutorId', animal.tutorId);
-        })
-        .catch(() => alert("Erro ao carregar dados do animal."));
+      api.get(`/animals/${id}`).then(res => {
+        const a = res.data;
+        setValue("name", a.name);
+        setValue("species", a.species);
+        setValue("breed", a.breed);
+        setValue("age", a.age);
+        setValue("tutorId", a.tutorId);
+      });
     }
-  }, [id, isEditing, setValue]);
+  }, [id]);
 
-  async function onSubmit(data: AnimalFormData) {
+  const onSubmit = async (data: AnimalFormData) => {
     try {
       if (isEditing) {
         await api.put(`/animals/${id}`, data);
-        alert("Animal atualizado com sucesso!");
       } else {
-        await api.post('/animals', { ...data, idade: Number(data.idade) });
-        alert("Animal cadastrado com sucesso!");
+        await api.post("/animals", data);
       }
-      navigate('/animals');
+
+      navigate("/animals");
     } catch (error) {
-      console.error(error);
-      alert("Erro ao salvar animal.");
+      alert("Erro ao salvar animal!");
     }
-  }
+  };
 
   return (
     <div className="container">
-      <div className="card card-center">
-        <h2>{isEditing ? 'Editar Animal' : 'Cadastrar Novo Animal'}</h2>
+      <div className="card form-card">
+        <h2>{isEditing ? "Editar Animal" : "Novo Animal"}</h2>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="form">
+        <form onSubmit={handleSubmit(onSubmit)}>
           
-          <label>Tutor/Dono</label>
-          <select {...register("tutorId")} required>
-            <option value="">Selecione um tutor</option>
-            {tutors.map(tutor => (
-              <option key={tutor.id} value={tutor.id}>
-                {tutor.name}
-              </option>
-            ))}
-          </select>
-
-          <label>Nome do Animal</label>
-          <input {...register("nome")} required />
+          <label>Nome</label>
+          <input {...register("name")} required />
 
           <label>Espécie</label>
-          <select {...register("especie")} required>
-            <option value="">Selecione a espécie</option>
-            <option value="Cachorro">Cachorro</option>
-            <option value="Gato">Gato</option>
-            <option value="Outro">Outro</option>
-          </select>
+          <input {...register("species")} required />
 
           <label>Raça</label>
-          <input {...register("raca")} placeholder="Ex: Golden Retriever, Siamês" required />
+          <input {...register("breed")} required />
 
-          <label>Idade (em anos)</label>
-          <input {...register("idade")} type="number" min="0" required />
+          <label>Idade</label>
+          <input {...register("age")} type="number" required />
 
-          <div className="button-group">
-            <button type="submit" className="btn-primary">
-              {isEditing ? 'Salvar Edição' : 'Cadastrar Animal'}
-            </button>
+          <label>ID do Tutor</label>
+          <input {...register("tutorId")} required />
 
-            <button 
-              type="button" 
-              className="btn-secondary"
-              onClick={() => navigate('/animals')}
-            >
-              Cancelar
-            </button>
-          </div>
+          <button type="submit" className="btn-primary">Salvar</button>
+
+          <button 
+            type="button"
+            className="btn-cancel"
+            onClick={() => navigate("/animals")}
+          >
+            Cancelar
+          </button>
         </form>
       </div>
     </div>

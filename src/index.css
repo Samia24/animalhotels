@@ -1,44 +1,43 @@
 /* ============================================
-   🎨 VARIÁVEIS E PALETA DE CORES
+   🎨 VARIÁVEIS DE COR
 ============================================ */
 :root {
-  --primary-color: #2ecc71;
-  --primary-hover: #27ae60;
-
-  --danger-color: #e63946;
-  --danger-hover: #c82333;
-
+  --primary-color: #22c55e;
+  --primary-hover: #16a34a;
+  --danger-color: #ef4444;
+  --danger-hover: #dc2626;
   --text-light: #f2f2f2;
-
+  --text-dark: #111;
   --radius: 14px;
-  --card-bg: rgba(255, 255, 255, 0.15);
+  --card-bg: rgba(255, 255, 255, 0.08);
+  --card-shadow: 0 8px 25px rgba(0,0,0,0.4);
+  --backdrop-blur: 16px;
+  --max-width: 1280px;
+  --input-bg: rgba(255,255,255,0.1);
+  --input-border: #444;
+  --success-color: #4ade80;
+  --warning-color: #facc15;
 }
 
-
 /* ============================================
-   🌑 LAYOUT GLOBAL (DARK + CENTRALIZAÇÃO)
+   🌑 LAYOUT GLOBAL
 ============================================ */
 body {
   background: #1a1a1a;
   color: var(--text-light);
   font-family: "Inter", sans-serif;
-
+  margin: 0;
+  padding: 40px 10px;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-
-  padding: 40px 10px;
 }
 
-/* Container global do React */
 #root {
-  width: 100%;
-  max-width: 1100px;
+  max-width: var(--max-width);
   margin: 0 auto;
+  width: 100%;
 }
 
-/* Para páginas que precisam ficar totalmente centralizadas */
 .page-center {
   min-height: 100vh;
   display: flex;
@@ -48,62 +47,48 @@ body {
   padding: 20px;
 }
 
-
 /* ============================================
-   🧊 CARD MODERNO (GLASS EFFECT)
+   🧊 CARDS (GLASS + SHADOW)
 ============================================ */
-.card {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(14px);
-  border-radius: 16px;
+.card,
+.form-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(var(--backdrop-blur));
+  border-radius: var(--radius);
   padding: 40px;
   width: 100%;
-  max-width: 450px;
+  max-width: 500px;
   color: #fff;
   text-align: center;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--card-shadow);
+  border: 1px solid rgba(255,255,255,0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card h1 {
-  margin-bottom: 10px;
+.card:hover,
+.form-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+}
+
+.card h1,
+.form-card h2 {
+  margin-bottom: 15px;
   font-size: 28px;
+  color: var(--text-light);
 }
 
 .card p {
-  margin-bottom: 20px;
-  font-size: 15px;
-  opacity: 0.9;
+  margin-bottom: 25px;
+  font-size: 16px;
+  opacity: 0.85;
 }
 
 .card hr {
-  width: 100%;
   border: none;
   border-top: 1px solid rgba(255,255,255,0.25);
   margin: 20px 0;
 }
-
-
-/* ============================================
-   🔐 LOGIN
-============================================ */
-.login-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-}
-
-.login-card {
-  width: 100%;
-  max-width: 400px;
-}
-
-.login-title {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  color: var(--primary-color);
-}
-
 
 /* ============================================
    📝 FORMULÁRIOS
@@ -111,149 +96,126 @@ body {
 form,
 .form,
 .form-default {
-  margin-top: 20px;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.2rem;
 }
 
 label {
-  font-weight: bold;
-  margin-bottom: -8px;
+  font-weight: 600;
   color: var(--text-light);
 }
 
 input,
-select {
+select,
+textarea {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   border-radius: var(--radius);
-  border: 1px solid #444;
-  background: rgba(255,255,255,0.1);
-  color: white;
-  font-size: 15px;
-}
-
-input::placeholder {
-  color: #ccc;
-}
-
-
-/* ============================================
-   🟩 BOTÕES MODERNOS
-============================================ */
-.btn {
-  display: block;
-  width: fit-content;
-  padding-left: 25px;
-  padding-right: 25px;
-  margin: 0 auto;
-  border: none;
-  border-radius: 12px;
-  text-align: center;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 18px;
-  transition: 0.2s ease-in-out;
-  text-decoration: none;
-  color: white;
-}
-
-/* Verde */
-.btn-green {
-  background: #22c55e;
-}
-.btn-green:hover {
-  background: #16a34a;
-}
-
-/* Cinza */
-.btn-gray {
-  background: #9ca3af;
-}
-.btn-gray:hover {
-  background: #6b7280;
-}
-
-/* Vermelho */
-.btn-red {
-  background: #ef4444;
-}
-.btn-red:hover {
-  background: #dc2626;
-}
-
-/* Botões agrupados em coluna */
-.btn-group-vertical {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  width: 100%;
-}
-
-/* Botão de link (editar) */
-.btn-link {
-  background: none;
-  border: none;
-  color: var(--primary-color);
-  font-weight: bold;
-  cursor: pointer;
-}
-.btn-link:hover {
-  opacity: 0.8;
-}
-
-/* Botões secundários */
-.btn-secondary,
-.btn-cancel {
-  background: rgba(255,255,255,0.2);
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
   color: #fff;
-  border-radius: var(--radius);
-  padding: 12px;
-  border: none;
-  cursor: pointer;
-  transition: 0.2s;
-  font-weight: bold;
-}
-.btn-secondary:hover,
-.btn-cancel:hover {
-  background: rgba(255,255,255,0.35);
+  font-size: 15px;
+  transition: all 0.25s ease;
 }
 
-/* Botão perigoso */
-.btn-danger {
-  background: var(--danger-color);
-  color: white;
-  padding: 10px 14px;
-  border-radius: var(--radius);
-  cursor: pointer;
-  font-weight: 600;
-}
-.btn-danger:hover {
-  background: var(--danger-hover);
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 10px rgba(34,197,94,0.4);
+  background: rgba(34,197,94,0.05);
 }
 
-/* Grupo horizontal */
-.button-group {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
+input.error,
+select.error,
+textarea.error {
+  border-color: var(--danger-color);
+  box-shadow: 0 0 8px rgba(239,68,68,0.4);
 }
 
+input::placeholder,
+textarea::placeholder {
+  color: #bbb;
+}
+
+/* Mensagens de feedback */
+.form-message {
+  font-size: 14px;
+  text-align: left;
+}
+.form-message.success { color: var(--success-color); }
+.form-message.error { color: var(--danger-color); }
 
 /* ============================================
-   📄 TABELAS (Modernas)
+   🟩 BOTÕES
+============================================ */
+.btn,
+.btn-primary,
+.btn-danger,
+.btn-cancel,
+.btn-secondary,
+.btn-link {
+  display: inline-block;
+  padding: 12px 28px;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+  text-decoration: none;
+  border: none;
+}
+
+.btn:hover,
+.btn-primary:hover,
+.btn-danger:hover,
+.btn-cancel:hover,
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+}
+
+/* Tipos de botões */
+.btn-green,
+.btn-primary { background: var(--primary-color); color: #fff; }
+.btn-green:hover,
+.btn-primary:hover { background: var(--primary-hover); }
+
+.btn-red,
+.btn-danger { background: var(--danger-color); color: #fff; }
+.btn-red:hover,
+.btn-danger:hover { background: var(--danger-hover); }
+
+.btn-gray,
+.btn-cancel { background: #444; color: #fff; }
+.btn-gray:hover,
+.btn-cancel:hover { background: #2d2d2d; }
+
+.btn-link { background: none; color: var(--primary-color); }
+.btn-link:hover { opacity: 0.8; }
+
+.button-group,
+.btn-group-vertical { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+
+/* ============================================
+   📄 TABELAS
 ============================================ */
 .table-default {
   width: 100%;
   border-collapse: collapse;
-  color: white;
+  color: #fff;
+  border-radius: var(--radius);
+  overflow: hidden;
 }
 
 .table-default th {
   background: rgba(255,255,255,0.1);
   padding: 14px;
-  border-bottom: 2px solid rgba(255,255,255,0.15);
+  border-bottom: 2px solid rgba(255,255,255,0.2);
+  text-align: left;
+  font-weight: 600;
 }
 
 .table-default td {
@@ -262,52 +224,84 @@ input::placeholder {
 }
 
 .table-default tr:hover {
-  background: rgba(255,255,255,0.05);
+  background: rgba(34,197,94,0.05);
+  transition: 0.25s;
 }
 
 .table-empty {
-  color: #ddd;
   text-align: center;
   padding: 20px;
+  color: #bbb;
 }
 
-.col-acoes {
-  width: 120px;
-}
-
+.col-acoes { width: 140px; }
 
 /* ============================================
-   📌 LAYOUT ENTRE TÍTULO E BOTÃO
+   🔐 LOGIN
 ============================================ */
-.flex-between {
+
+.login-page {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
+  flex-direction: column;
+  justify-content: center; /* horizontal */
+  align-items: center;     /* vertical */
+  min-height: 100vh;       /* altura total da tela */
+  gap: 40px;
+  padding: 20px;
+  background: #1a1a1a;
 }
 
-/* BOTÃO DE ENTRAR - ESTILO MINIMALISTA VERDE NEON */
+.login-images {
+  display: flex;
+  justify-content: center; /* imagens lado a lado */
+  gap: 20px;               /* espaço entre as imagens */
+}
+
+.login-img {
+  max-width: 120px;
+  height: auto;
+  object-fit: contain;
+}
+
 .login-card .btn-primary {
   background: rgba(34,197,94,0.2);
-  border: 2px solid #22c55e;
-  color: #22c55e;
-  border-radius: 14px;
-  padding: 13px;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 14px 28px;
   font-weight: 600;
   font-size: 16px;
-  transition: 0.25s ease-in-out;
-  text-align: center;
-  width: fit-content;
-padding-left: 25px;
-padding-right: 25px;
-margin: 0 auto;
-display: block;
-
+  border-radius: var(--radius);
+  display: block;
+  margin: 0 auto;
+  transition: 0.25s;
 }
-
 .login-card .btn-primary:hover {
-  background: #22c55e;
+  background: var(--primary-color);
   color: #fff;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
 }
+
+/* ============================================
+   📱 RESPONSIVIDADE
+============================================ */
+@media (max-width: 768px) {
+  .card, .form-card {
+    padding: 30px 20px;
+  }
+  .table-default th,
+  .table-default td {
+    padding: 10px;
+  }
+  .btn, .btn-primary, .btn-cancel, .btn-danger {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+  body {
+    padding: 20px 10px;
+  }
+}
+
+
+
 
 

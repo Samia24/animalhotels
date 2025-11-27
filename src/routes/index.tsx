@@ -20,7 +20,8 @@ export function AppRoutes() {
         <Route
           path="/dashboard"
           element={
-            <div className="page-center card">
+            <div className="page-center ">
+              <div className="card">
               <h1>Bem-vindo, {user?.name}!</h1>
               <p>O que deseja gerenciar?</p>
 
@@ -40,6 +41,7 @@ export function AppRoutes() {
                 Sair do Sistema
               </button>
             </div>
+          </div>
           }
         />
 
