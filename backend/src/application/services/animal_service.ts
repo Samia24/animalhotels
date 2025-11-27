@@ -31,17 +31,28 @@ export class AnimalService {
     }
 
     async getAnimals(): Promise<Animal[]> {
-        const animals = await this.animalDataSource.find();
+        // ADICIONADO: relations: ["tutor"]
+        const animals = await this.animalDataSource.find({
+            relations: ["tutor"]
+        });
         return animals;
     }
 
     async getAnimalById(id: string): Promise<Animal> {
-        const animal = await this.animalDataSource.findOneBy({ id: Number(id) });
+        // ALTERADO: de findOneBy para findOne para suportar relações
+        const animal = await this.animalDataSource.findOne({
+            where: { id: Number(id) },
+            relations: ["tutor"]
+        });
         return animal;
     }
 
     async getAnimalByName(nome: string): Promise<Animal> {
-        const animal = await this.animalDataSource.findOneBy({ nome });
+        // ALTERADO: de findOneBy para findOne para suportar relações
+        const animal = await this.animalDataSource.findOne({
+            where: { nome },
+            relations: ["tutor"]
+        });
         return animal;
     }
 
