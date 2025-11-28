@@ -1,42 +1,41 @@
 import { useEffect, useState } from "react";
-import { api } from "../../services/api";
-import { Link } from "react-router-dom";
-
-interface Animal {
-  id: string;
-  name: string;
-  species: string;
-  breed: string;
-  age: number;
-  tutorId: string;
-}
+import { getAnimais, deleteAnimal } from "../../services/api";
+import { Link, useNavigate } from "react-router-dom"; 
+import type { IAnimal } from "../../types";
 
 export function AnimalList() {
-  const [animals, setAnimals] = useState<Animal[]>([]);
+  const [animals, setAnimals] = useState<IAnimal[]>([]);
+  const navigate = useNavigate(); 
 
   useEffect(() => {
-    api.get("/animals").then(res => setAnimals(res.data));
+    getAnimais().then(res => setAnimals(res.data));
   }, []);
 
-  const deleteAnimal = async (id: string) => {
+  const handleDelete = async (id: number) => {
     if (!confirm("Deseja excluir?")) return;
-    await api.delete(`/animals/${id}`);
+    await deleteAnimal(String(id));
     setAnimals(animals.filter(a => a.id !== id));
   };
 
   return (
-    <div className="container">
-      <h2>Animais</h2>
+    <div className="page-center">
+      <h1>Animais</h1>
 
-      <Link to="/animals/new" className="btn-primary">Novo Animal</Link>
+      {/* Botões de Ação no Topo */}
+      <div style={{display: 'flex', gap: '10px', marginBottom: '10px'}}>
+        <button className="btn btn-gray" onClick={() => navigate('/dashboard')}>
+          Voltar
+        </button>
+        <Link to="/animals/new" className="btn btn-green">Novo Animal</Link>
+      </div>
 
-      <table>
+      <table className="table-default">
         <thead>
           <tr>
             <th>Nome</th>
             <th>Espécie</th>
             <th>Raça</th>
-            <th>Idade</th>
+            <th>Tutor</th>
             <th>Ações</th>
           </tr>
         </thead>
@@ -44,18 +43,19 @@ export function AnimalList() {
         <tbody>
           {animals.map(a => (
             <tr key={a.id}>
-              <td>{a.name}</td>
-              <td>{a.species}</td>
-              <td>{a.breed}</td>
-              <td>{a.age}</td>
+              <td>{a.nome}</td>
+              <td>{a.especie}</td>
+              <td>{a.raca}</td>
+              <td>{a.tutor?.nome || "Sem tutor"}</td>
 
               <td>
-                <Link to={`/animals/edit/${a.id}`} className="btn-edit">Editar</Link>
-                <button className="btn-delete" onClick={() => deleteAnimal(a.id)}>
-                  Excluir
-                </button>
+                <div style={{display: 'flex', gap: '5px'}}>
+                    <Link to={`/animals/edit/${a.id}`} className="btn btn-blue" style={{padding: '5px 10px', fontSize: '12px'}}>Editar</Link>
+                    <button className="btn btn-red" style={{padding: '5px 10px', fontSize: '12px'}} onClick={() => handleDelete(a.id)}>
+                    Excluir
+                    </button>
+                </div>
               </td>
-
             </tr>
           ))}
         </tbody>
@@ -63,4 +63,3 @@ export function AnimalList() {
     </div>
   );
 }
-

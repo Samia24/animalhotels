@@ -2,8 +2,27 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 export function PrivateRoute() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user, signOut } = useAuth();
 
-  // Se estiver autenticado, renderiza a rota filha (Outlet). Se não, chuta pro Login.
-  return isAuthenticated ? <Outlet /> : <Navigate to="/" />;
+  if (!isAuthenticated) {
+    return <Navigate to="/" />;
+  }
+
+  return (
+    <>
+      <header className="app-header">
+        <div style={{fontWeight: 'bold', fontSize: '1.2rem'}}>AnimalHotels</div>
+        
+        <div className="header-user-info">
+          <span className="user-name">Olá, {user?.nome}</span>
+          <button onClick={signOut} className="btn-logout">
+            Sair
+          </button>
+        </div>
+      </header>
+
+      {/*Renderização das páginas (Dashboard, Tutores, etc)*/}
+      <Outlet />
+    </>
+  );
 }

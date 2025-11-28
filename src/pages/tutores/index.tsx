@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
-import { getTutores, deleteTutor } from "../../services/api";
-import { Link } from "react-router-dom";
+import { getTutores, deleteTutor, getAnimais } from "../../services/api"; 
+import { Link, useNavigate } from "react-router-dom";
+import type { IAnimal } from "../../types";
 
 interface Tutor {
-  id: string;
-  name: string;
-  email: string;
-  phone?: string;
+  id: number;
+  nome: string;
+  telefone: string;
+  endereco: string;
 }
 
 export function Tutors() {
   const [tutores, setTutores] = useState<Tutor[]>([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const fetchTutores = async () => {
     try {
@@ -24,14 +26,27 @@ export function Tutors() {
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (window.confirm("Deseja realmente excluir este tutor?")) {
-      try {
-        await deleteTutor(id);
-        setTutores(tutores.filter(t => t.id !== id));
-      } catch (error) {
-        console.error("Erro ao excluir tutor", error);
+  const handleDelete = async (id: number) => {
+    // 1. Busca todos os animais para verificar vínculo
+    // (Num cenário real com muitos dados, o backend deveria fazer essa validação)
+    try {
+      const { data: animais } = await getAnimais();
+      
+      // O backend retorna o objeto tutor dentro do animal
+      const temAnimalVinculado = animais.some((a: IAnimal) => a.tutor?.id === id);
+
+      if (temAnimalVinculado) {
+        alert("Não é possível excluir este tutor pois ele possui animais cadastrados!");
+        return;
       }
+
+      if (window.confirm("Deseja realmente excluir este tutor?")) {
+        await deleteTutor(String(id));
+        setTutores(tutores.filter((t) => t.id !== id));
+      }
+    } catch (error) {
+      console.error("Erro ao verificar ou excluir tutor", error);
+      alert("Ocorreu um erro ao tentar excluir.");
     }
   };
 
@@ -44,12 +59,19 @@ export function Tutors() {
   return (
     <div className="page-center">
       <h1>Lista de Tutores</h1>
-      <Link to="/tutors/new" className="btn btn-green">Novo Tutor</Link>
-      <table className="table">
+      
+      <div style={{display: 'flex', gap: '10px', marginBottom: '10px'}}>
+        <button className="btn btn-gray" onClick={() => navigate('/dashboard')}>
+          Voltar
+        </button>
+        <Link to="/tutors/new" className="btn btn-green">Novo Tutor</Link>
+      </div>
+      
+      <table className="table-default">
         <thead>
           <tr>
             <th>Nome</th>
-            <th>Email</th>
+            <th>Endereço</th>
             <th>Telefone</th>
             <th>Ações</th>
           </tr>
@@ -57,12 +79,14 @@ export function Tutors() {
         <tbody>
           {tutores.map(tutor => (
             <tr key={tutor.id}>
-              <td>{tutor.name}</td>
-              <td>{tutor.email}</td>
-              <td>{tutor.phone || "-"}</td>
+              <td>{tutor.nome}</td>
+              <td>{tutor.endereco || "-"}</td>
+              <td>{tutor.telefone || "-"}</td>
               <td>
-                <Link to={`/tutors/edit/${tutor.id}`} className="btn btn-blue">Editar</Link>
-                <button className="btn btn-red" onClick={() => handleDelete(tutor.id)}>Excluir</button>
+                <div style={{display: 'flex', gap: '5px'}}>
+                  <Link to={`/tutors/edit/${tutor.id}`} className="btn btn-blue" style={{padding: '5px 10px', fontSize: '12px'}}>Editar</Link>
+                  <button className="btn btn-red" style={{padding: '5px 10px', fontSize: '12px'}} onClick={() => handleDelete(tutor.id)}>Excluir</button>
+                </div>
               </td>
             </tr>
           ))}

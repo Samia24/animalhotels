@@ -1,73 +1,65 @@
-# React + TypeScript + Vite
+# AnimalHotels - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este é o frontend da aplicação **AnimalHotels**, desenvolvido com **React**, **TypeScript** e **Vite**. O sistema permite o gerenciamento de um hotel para animais, incluindo controle de usuários, tutores e os próprios animais hospedados.
 
-Currently, two official plugins are available:
+## Pré-requisitos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Antes de começar, certifique-se de ter instalado:
 
-## React Compiler
+* **Node.js** (versão 22 ou superior)
+* **NPM** (gerenciador de pacotes padrão do Node)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Importante:** Para que este frontend funcione, o **Backend** deve estar rodando localmente na porta `8080`. O frontend utiliza um Proxy configurado no Vite para se comunicar com o backend sem erros de CORS.
 
-## Expanding the ESLint configuration
+## Instalação
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1.  Abra o terminal na pasta do projeto frontend:
+    ```bash
+    cd animalhotels
+    ```
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+2.  Instale as dependências do projeto:
+    ```bash
+    npm install
+    ```
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Como Rodar
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1.  Certifique-se de que o **Backend** já esteja rodando em outro terminal (`npm start` na pasta do backend).
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2.  Inicie o servidor de desenvolvimento do frontend:
+    ```bash
+    npm run dev
+    ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+3.  O terminal mostrará o endereço local (geralmente `http://localhost:5173`). Abra este endereço no seu navegador.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Guia de Uso
+
+### 1. Login Inicial
+Ao abrir a aplicação, você verá a tela de login.
+* O sistema valida o **Nome de Usuário** e a **Senha** cadastrados no banco de dados.
+* Caso seja o primeiro acesso e o banco esteja vazio, certifique-se de ter criado um usuário via API/Insomnia (ex: `admin` / `123`).
+
+### 2. Dashboard
+Após o login, você será direcionado ao Painel de Controle. No topo, há um cabeçalho fixo com seu nome e o botão de **Sair**.
+No centro, você tem acesso rápido aos módulos:
+* **Gerenciar Tutores**
+* **Gerenciar Animais**
+* **Gerenciar Usuários**
+
+### 3. Gerenciar Tutores
+* **Listagem:** Veja todos os tutores cadastrados com nome, endereço e telefone.
+* **Novo Tutor:** Clique no botão verde para cadastrar alguém.
+* **Ações:** Use os botões "Editar" ou "Excluir" em cada linha.
+    * *Nota:* O sistema impede a exclusão de um tutor caso ele possua animais vinculados.
+
+### 4. Gerenciar Animais
+* **Listagem:** Exibe o animal, espécie, raça e o nome do tutor responsável.
+* **Novo Animal (Funcionalidade Especial):**
+    * Ao cadastrar um animal, você pode selecionar um **Tutor Existente** na lista.
+    * OU marcar a opção **"Cadastrar novo Tutor?"**. Isso abrirá campos extras para registrar o tutor e o animal de uma só vez.
+
+### 5. Gerenciar Usuários
+* Permite criar outros acessos ao sistema (ex: recepcionistas, administradores).
+* **Proteção:** O sistema não permite que você exclua o seu próprio usuário logado.

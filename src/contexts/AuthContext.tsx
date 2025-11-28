@@ -29,7 +29,7 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
 };
 
 interface AuthContextType extends AuthState {
-  signIn: (userData: IUser) => void;
+  signIn: (nome: string, senha: string) => Promise<void>;
   signOut: () => void;
 }
 
@@ -40,25 +40,35 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const storedUser = localStorage.getItem('animalHotels:user');
-    const storedToken = localStorage.getItem('animalHotels:token');
-
-    if (storedUser && storedToken) {
-      api.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
+    if (storedUser) {
       dispatch({ type: 'LOGIN', payload: JSON.parse(storedUser) });
     }
   }, []);
 
-  const signIn = (userData: IUser) => {
-    localStorage.setItem('animalHotels:user', JSON.stringify(userData));
-    localStorage.setItem('animalHotels:token', userData.token);
-    api.defaults.headers.common['Authorization'] = `Bearer ${userData.token}`;
-    dispatch({ type: 'LOGIN', payload: userData });
+  const signIn = async (nome: string, senha: string) => {
+    try {
+      // Busca usuário pelo nome no backend
+      const response = await api.get(`/users/name/${nome}`);
+      const user = response.data;
+
+      // Verificação simples de senha
+      // Nota: Em produção, isso deve ser feito no backend com hash/bcrypt
+      if (user && user.senha === senha) {
+        const userData: IUser = { id: user.id, nome: user.nome };
+        
+        localStorage.setItem('animalHotels:user', JSON.stringify(userData));
+        dispatch({ type: 'LOGIN', payload: userData });
+      } else {
+        throw new Error("Credenciais inválidas");
+      }
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   };
 
   const signOut = () => {
     localStorage.removeItem('animalHotels:user');
-    localStorage.removeItem('animalHotels:token');
-    delete api.defaults.headers.common['Authorization'];
     dispatch({ type: 'LOGOUT' });
   };
 
