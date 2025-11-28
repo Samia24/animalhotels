@@ -9,7 +9,7 @@ export function AnimalForm() {
   const { register, handleSubmit, setValue } = useForm();
   const navigate = useNavigate();
   const { id } = useParams();
-  const { user } = useAuth();
+  const { user } = useAuth(); // usuario logado
   
   const [tutors, setTutors] = useState<ITutor[]>([]);
   const [isNewTutor, setIsNewTutor] = useState(false);
@@ -41,7 +41,8 @@ export function AnimalForm() {
             endereco: data.tutorEndereco,
             sexo: data.tutorSexo,
             nascimento: "2000-01-01", 
-            usuarioCadastroId: user?.id
+            // Vincula o novo tutor ao usuário logado
+            usuarioCadastroId: user?.id 
         };
         const resTutor = await api.post('/tutores', newTutorPayload);
         finalTutorId = resTutor.data.id;
@@ -52,7 +53,8 @@ export function AnimalForm() {
         especie: data.especie,
         raca: data.raca,
         tutorId: finalTutorId,
-        usuarioCadastroId: user?.id
+        // Vincula o novo animal ao usuário logado
+        usuarioCadastroId: user?.id 
       };
 
       if (id) {

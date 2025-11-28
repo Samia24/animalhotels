@@ -6,7 +6,7 @@ import { useAuth } from "../../contexts/AuthContext";
 export function TutorForm() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user } = useAuth(); // usuário logado
 
   const [tutor, setTutor] = useState({
     nome: "",
@@ -41,7 +41,11 @@ export function TutorForm() {
       if (id) {
         await updateTutor(id, tutor);
       } else {
-        await createTutor({ ...tutor, usuarioCadastroId: user?.id });
+        // Envia o id do usuário logado ao criar
+        await createTutor({ 
+          ...tutor, 
+          usuarioCadastroId: user?.id 
+        });
       }
       navigate("/tutors");
     } catch (error) {
