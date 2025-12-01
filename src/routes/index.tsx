@@ -44,8 +44,7 @@ export function AppRoutes() {
             </div>
           }
         />
-
-        {/* Rotas permanecem iguais... */}
+        
         <Route path="/tutors" element={<Tutors />} />
         <Route path="/tutors/new" element={<TutorForm />} />
         <Route path="/tutors/edit/:id" element={<TutorForm />} />

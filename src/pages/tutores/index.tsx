@@ -28,7 +28,6 @@ export function Tutors() {
 
   const handleDelete = async (id: number) => {
     // 1. Busca todos os animais para verificar vínculo
-    // (Num cenário real com muitos dados, o backend deveria fazer essa validação)
     try {
       const { data: animais } = await getAnimais();
       

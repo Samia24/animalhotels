@@ -7,11 +7,11 @@ import gato2 from '../../assets/gato2.png';
 
 export function Login() {
   const { register, handleSubmit } = useForm();
-  const { signIn, isAuthenticated } = useAuth(); // Pegue o isAuthenticated
+  const { signIn, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [error, setError] = useState("");
 
-  // Se já estiver logado, chuta pro dashboard
+
   useEffect(() => {
     if (isAuthenticated) {
       navigate('/dashboard', { replace: true });
@@ -35,7 +35,7 @@ export function Login() {
         <img src={gato2} alt="gato" className="login-img" />
       </div>
       <div className="form-card">
-        <h2 style={{color: '#333'}}>AnimalHotels</h2>
+        <h2 style={{color: '#333'}}>Animals Hotel</h2>
 
         <form onSubmit={handleSubmit(handleLogin)} className="form-default">
           <label>Nome de Usuário</label>

@@ -52,7 +52,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const user = response.data;
 
       // Verificação simples de senha
-      // Nota: Em produção, isso deve ser feito no backend com hash/bcrypt
       if (user && user.senha === senha) {
         const userData: IUser = { id: user.id, nome: user.nome };
         

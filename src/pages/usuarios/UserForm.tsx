@@ -16,7 +16,7 @@ export function UserForm() {
       getUserById(id).then((res) => {
         setFormData({
           nome: res.data.nome,
-          senha: res.data.senha, // Backend retorna a senha (idealmente não deveria, mas retorna)
+          senha: res.data.senha, 
         });
       });
     }
