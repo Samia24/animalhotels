@@ -1,0 +1,28 @@
+{
+  "name": "selenium-tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:login-correto": "ts-node tests/loginCorreto.test.ts",
+    "test:login-incorreto": "ts-node tests/loginIncorreto.test.ts",
+    "test:tutor-cadastro": "ts-node tests/tutorCadastro.test.ts",
+    "test:tutor-edicao": "ts-node tests/tutorEdicao.test.ts",
+    "test:navegacao": "ts-node tests/navegacao.test.ts",
+    "test:tutor-deletar-correto": "ts-node tests/tutorDeletarCorreto.test.ts",
+    "test:tutor-deletar-incorreto": "ts-node tests/tutorDeletarIncorreto.test.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "selenium-webdriver": "^4.38.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "@types/selenium-webdriver": "^4.35.4",
+    "chromedriver": "^142.0.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
